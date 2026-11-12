@@ -3,3 +3,31 @@
 <p>escolha consulta produtos no menu superior para pesquisar</p>
 
 <p>em cadastro produtos é de acesso restrito sqn</p>
+
+
+<h3 style="text-align: center;">Nossos produtos em destaque<h3>
+
+<?php
+require '../db/conexao.php';
+$resultado = $conexao->query("select * from produto order by preco asc limit 2");
+
+?>
+
+<main style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+
+<div style="display: flex; justify-content: space-between; border-bottom: 1px solid #aaa; width: 70%">
+        <div style="flex: 2; text-align: left;">Produto</div>
+        <div style="flex: 1; text-align: right;">Preço unitário</div>
+        <div style="flex: 1; text-align: right;">Quantidade</div>
+</div>
+
+<?php while($produto = $resultado->fetch_assoc()): ?>
+    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #aaa; width: 70%">
+        <div style="flex: 2; text-align: left;"><?= htmlspecialchars($produto['nome']) ?></div>
+        <div style="flex: 1; text-align: right;"><?= number_format($produto['preco'], 2, ',', '.') ?></div>
+        <div style="flex: 1; text-align: right;"><?= $produto['quantidade'] ?></div>
+    </div>
+<?php endwhile; ?>
+
+
+</main>
